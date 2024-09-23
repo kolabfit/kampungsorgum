@@ -4,79 +4,103 @@ export const headerData = {
   links: [
     {
       text: 'Beranda',
-      href: '#',
+      href: getPermalink('/'),
     },
     {
       text: 'Tentang Kami', 
-      href: '#',
+      href: getPermalink('/about'),
     },
     {
       text: 'Paket Wisata',
-      href: '#',
+      href: getPermalink('/package'),
     },
     {
       text: 'Produk',
-      href: '#',
+      href: getPermalink('/product'),
     },
     {
       text: 'Edusorgum',
-      href: '#',
+      href: getPermalink('/edusorgum'),
     },
     {
       text: 'Media',
-      href: '#',
+      href: getPermalink('/media'),
     },
     {
       text: 'Kontak',
-      href: '#',
+      href: getPermalink('/contact'),
     },
-  ]
+  ],
+  actions: [{ text: 'Hubungi Kami', href: getPermalink('/contact'), target: '_blank' }],
 };
 
 export const footerData = {
   links: [
     {
-      title: 'Product',
+      title: 'Navigasi',
       links: [
-        { text: 'Features', href: '#' },
-        { text: 'Security', href: '#' },
-        { text: 'Team', href: '#' },
-        { text: 'Enterprise', href: '#' },
-        { text: 'Customer stories', href: '#' },
-        { text: 'Pricing', href: '#' },
-        { text: 'Resources', href: '#' },
+        {
+          text: 'Beranda',
+          href: getPermalink('/'),
+        },
+        {
+          text: 'Tentang Kami', 
+          href: getPermalink('/about'),
+        },
+        {
+          text: 'Paket Wisata',
+          href: getPermalink('/package'),
+        },
+        {
+          text: 'Produk',
+          href: getPermalink('/product'),
+        },
+        {
+          text: 'Edusorgum',
+          href: getPermalink('/edusorgum'),
+        },
+        {
+          text: 'Media',
+          href: getPermalink('/media'),
+        },
+        {
+          text: 'Kontak',
+          href: getPermalink('/contact'),
+        },
       ],
     },
     {
-      title: 'Platform',
+      title: 'Tentang Kami',
       links: [
-        { text: 'Developer API', href: '#' },
-        { text: 'Partners', href: '#' },
-        { text: 'Atom', href: '#' },
-        { text: 'Electron', href: '#' },
-        { text: 'AstroWind Desktop', href: '#' },
+        {
+          text: 'Sejarah', 
+          href: getPermalink('/about#features'),
+        },
+        {
+          text: 'Profil', 
+          href: getPermalink('/about'),
+        },
+        {
+          text: 'Tim KWT', 
+          href: getPermalink('/about'),
+        },
       ],
     },
     {
-      title: 'Support',
+      title: 'Produk Kami',
       links: [
-        { text: 'Docs', href: '#' },
-        { text: 'Community Forum', href: '#' },
-        { text: 'Professional Services', href: '#' },
-        { text: 'Skills', href: '#' },
-        { text: 'Status', href: '#' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { text: 'About', href: '#' },
-        { text: 'Blog', href: '#' },
-        { text: 'Careers', href: '#' },
-        { text: 'Press', href: '#' },
-        { text: 'Inclusion', href: '#' },
-        { text: 'Social Impact', href: '#' },
-        { text: 'Shop', href: '#' },
+        {
+          text: 'Makanan', 
+          href: getPermalink('/about#makanan'),
+        },
+        {
+          text: 'Minuman', 
+          href: getPermalink('/about#minuman'),
+        },
+        {
+          text: 'Bahan Baku', 
+          href: getPermalink('/about#bahanbaku'),
+        },
       ],
     },
   ],
@@ -86,7 +110,7 @@ export const footerData = {
   ],
   socialLinks: [
     { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/kampungsorgum.bojongmanggu/' },
     { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
     { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/onwidget/astrowind' },
