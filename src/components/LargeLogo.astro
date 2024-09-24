@@ -1,0 +1,15 @@
+---
+import { SITE } from 'astrowind:config';
+
+import favIcon from '~/assets/favicons/favicon.ico';
+import favIconSvg from '~/assets/favicons/favicon.svg';
+import appleTouchIcon from '~/assets/favicons/apple-touch-icon.png';
+---
+
+<span
+  class="self-center ml-2 px-2 rtl:ml-0 rtl:mr-2 text-2xl md:text-sm text-gray-900 whitespace-nowrap dark:text-white"
+>
+  <img src={favIcon} alt={SITE.title} class="sm:justify-center h-18 w-auto sm:h-25" />
+  <br />
+  <p>Pamengpeuk, Bojongmanggu, Bandung, Jawa Barat</p>
+</span>

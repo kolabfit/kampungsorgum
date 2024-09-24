@@ -37,35 +37,19 @@ export const headerData = {
 export const footerData = {
   links: [
     {
-      title: 'Navigasi',
+      title: 'Paket',
       links: [
         {
-          text: 'Beranda',
-          href: getPermalink('/'),
+          text: 'Cooking Class',
+          href: getPermalink('/package#cookingClass'),
         },
         {
-          text: 'Tentang Kami', 
-          href: getPermalink('/about'),
+          text: 'Mini Tour',
+          href: getPermalink('/package#miniTour'),
         },
         {
-          text: 'Paket Wisata',
-          href: getPermalink('/package'),
-        },
-        {
-          text: 'Produk',
-          href: getPermalink('/product'),
-        },
-        {
-          text: 'Edusorgum',
-          href: getPermalink('/edusorgum'),
-        },
-        {
-          text: 'Media',
-          href: getPermalink('/media'),
-        },
-        {
-          text: 'Kontak',
-          href: getPermalink('/contact'),
+          text: 'Budidaya',
+          href: getPermalink('/package#budidaya'),
         },
       ],
     },
