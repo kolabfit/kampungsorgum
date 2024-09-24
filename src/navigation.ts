@@ -7,7 +7,7 @@ export const headerData = {
       href: getPermalink('/'),
     },
     {
-      text: 'Profil', 
+      text: 'Profil',
       href: getPermalink('/about'),
     },
     {
@@ -31,7 +31,7 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  actions: [{ text: 'Hubungi Kami', href: getPermalink('/contact')}],
+  actions: [{ text: 'Hubungi Kami', href: getPermalink('/contact') }],
 };
 
 export const footerData = {
@@ -53,15 +53,15 @@ export const footerData = {
       title: 'Tentang Kami',
       links: [
         {
-          text: 'Sejarah', 
+          text: 'Sejarah',
           href: getPermalink('/about#features'),
         },
         {
-          text: 'Profil', 
+          text: 'Profil',
           href: getPermalink('/about'),
         },
         {
-          text: 'Tim KWT', 
+          text: 'Tim KWT',
           href: getPermalink('/about'),
         },
       ],
@@ -70,15 +70,15 @@ export const footerData = {
       title: 'Produk Kami',
       links: [
         {
-          text: 'Makanan', 
+          text: 'Makanan',
           href: getPermalink('/product#makanan'),
         },
         {
-          text: 'Minuman', 
+          text: 'Minuman',
           href: getPermalink('/product#minuman'),
         },
         {
-          text: 'Bahan Baku', 
+          text: 'Bahan Baku',
           href: getPermalink('/product#bahanbaku'),
         },
       ],
@@ -90,7 +90,12 @@ export const footerData = {
   ],
   socialLinks: [
     // { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/kampungsorgum.bojongmanggu/', target: '_blank' },
+    {
+      ariaLabel: 'Instagram',
+      icon: 'tabler:brand-instagram',
+      href: 'https://www.instagram.com/kampungsorgum.bojongmanggu/',
+      target: '_blank',
+    },
     // { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
     // { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
     // { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/onwidget/astrowind' },
