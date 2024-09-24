@@ -37,7 +37,7 @@ export const headerData = {
 export const footerData = {
   links: [
     {
-      title: 'Paket',
+      title: 'Layanan Kami',
       links: [
         {
           text: 'Cooking Class',
@@ -46,10 +46,6 @@ export const footerData = {
         {
           text: 'Mini Tour',
           href: getPermalink('/package#miniTour'),
-        },
-        {
-          text: 'Budidaya',
-          href: getPermalink('/package#budidaya'),
         },
       ],
     },
