@@ -1,4 +1,4 @@
-import { getPermalink } from './utils/permalinks';
+import { getPermalink, getBlogPermalink } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -8,19 +8,41 @@ export const headerData = {
     },
     {
       text: 'Profil',
-      href: getPermalink('/about'),
+      links: [
+        {
+          text: 'Sejarah',
+          href: getPermalink('/about#sejarah'),
+        },
+        {
+          text: 'Tentang Kami',
+          href: getPermalink('/about#tentang'),
+        },
+        {
+          text: 'Tim KWT',
+          href: getPermalink('/about'),
+        }
+      ],
     },
     {
       text: 'Paket',
-      href: getPermalink('/package'),
+      href: getPermalink('/paket'),
     },
     {
       text: 'Produk',
-      href: getPermalink('/product'),
+      links: [
+        {
+          text: 'Paket Budidaya',
+          href: getPermalink('/product#paket'),
+        },
+        {
+          text: 'Olahan Sorgum',
+          href: getPermalink('/product#olahan'),
+        }
+      ],
     },
     {
       text: 'Edusorgum',
-      href: getPermalink('/edusorgum'),
+      href: getBlogPermalink(),
     },
     {
       text: 'Media',
