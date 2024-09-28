@@ -1,8 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
+import Hero from '~/components/widgets/Hero.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import ContactApps from '~/components/widgets/ContactApps.astro';
 
 const metadata = {
   title: 'Kontak',
@@ -12,9 +12,52 @@ const metadata = {
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <Hero
+  images={[
+  {
+    src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    alt: 'Image 1 description',
+    width: 1024,
+    height: 576,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    alt: 'Image 2 description',
+    width: 1024,
+    height: 576,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    alt: 'Image 3 description',
+    width: 1024,
+    height: 576,
+  },
+]};
+>
+  <Fragment slot="title">
+    Hubungi Kami
+  </Fragment>
 
-  <ContactUs
+  <Fragment slot="subtitle">
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+  </Fragment>
+
+  <Fragment slot="bg">
+    <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+  </Fragment>
+
+  <!-- <Fragment slot="subtitle">
+    <span class="hidden sm:inline">
+      <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro 4.0
+      + Tailwind CSS.</span
+    >
+    <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
+    Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages &
+    Blogs.
+  </Fragment> -->
+</Hero>
+
+  <!-- <ContactUs
     id="form"
     title="Drop us a message today!"
     subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
@@ -38,40 +81,41 @@ const metadata = {
         'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
     }}
     description="Our support team typically responds within 24 business hours."
-  />
+  /> -->
 
   <!-- Features2 Widget ************** -->
 
-  <Features2
-    title="We are here to help!"
+  <ContactApps
+    title='Kontak Kami'
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
+        icon: 'tabler:brand-whatsapp',
+        href: 'https://wa.me/628112428868',
+        target: 'blank',
       },
       {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+        icon: 'tabler:mail',
+        href: 'mailto: sorgumbdg@gmail.com',
+        target: 'blank',
       },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
+    ]}
+  />
+
+  <Features2
+    items={[
       {
         title: 'Phone',
-        description: '+1 (234) 567-890',
+        description: '08112428868',
         icon: 'tabler:headset',
       },
       {
         title: 'Email',
-        description: 'contact@support.com',
+        description: 'sorgumbdg@gmail.com',
         icon: 'tabler:mail',
       },
       {
         title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
+        description: 'Desa Bojongmanggu, Kecamatan Pameungpeuk, Kabupaten Bandung',
         icon: 'tabler:map-pin',
       },
     ]}

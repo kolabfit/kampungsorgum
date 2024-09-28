@@ -133,12 +133,14 @@ export interface Stat {
 }
 
 export interface Item {
+  href?: string | URL | null | undefined;
   title?: string;
   description?: string;
   icon?: string;
   classes?: Record<string, string>;
   callToAction?: CallToAction;
   image?: Image;
+  target?: string;
 }
 
 export interface Price {
@@ -216,7 +218,7 @@ export interface Form {
 export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
   content?: string;
   actions?: string | CallToAction[];
-  image?: string | unknown;
+  images?: ImageProps[];
 }
 
 export interface Team extends Omit<Headline, 'classes'>, Widget {

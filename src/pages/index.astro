@@ -9,7 +9,7 @@ import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import EdursogumPosts from '~/components/widgets/EdursogumPosts.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import LatestProducts from '~/components/widgets/LatestProducts.astro';
 import { SITE } from 'astrowind:config';
 
 const metadata = {
@@ -31,7 +31,27 @@ const metadata = {
         // icon: 'tabler:download',
       },
       // { text: 'Learn more', href: '#features' },
-    ]}
+    ]},
+    images={[
+    {
+      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      alt: 'Image 1 description',
+      width: 1024,
+      height: 576,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      alt: 'Image 2 description',
+      width: 1024,
+      height: 576,
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      alt: 'Image 3 description',
+      width: 1024,
+      height: 576,
+    },
+  ]};
   >
     <Fragment slot="title">
       {SITE?.name}
@@ -192,23 +212,24 @@ const metadata = {
   <!-- HighlightedPosts Widget ******* -->
 
   <EdursogumPosts
-    title="Blog Informasi Edusorgum"
+    title="Informasi Edusorgum"
     information={`Temukan manfaat sorgum, cara mengolahnya, hingga tips untuk mengembangkan pertanian sorgum secara berkelanjutan.`}
   />
 
   <!-- BlogLatestPost Widget **************** -->
 
-  <BlogLatestPosts
+  <LatestProducts
     id="blog"
     title="Produk Sorgum"
     linkText='Lihat Semua Produk'
     linkUrl={getPermalink('/product')}
+    count={6}
     information={`Temukan berbagai produk olahan sorgum yang sehat, lezat, dan ramah lingkungan.`}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
     </Fragment>
-  </BlogLatestPosts>
+  </LatestProducts>
 
   <!-- CallToAction Widget *********** -->
 

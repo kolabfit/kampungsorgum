@@ -1,0 +1,52 @@
+---
+import 'swiper/swiper-bundle.min.css'; // Import Swiper's CSS
+
+const { images } = Astro.props;
+---
+
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    {images.map((image) => (
+      <div class="swiper-slide">
+        <img src={image.src} alt={image.alt} width={image.width} height={image.height} class="w-full h-auto" />
+      </div>
+    ))}
+  </div>
+
+  <!-- Add Pagination, Navigation if needed -->
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</div>
+
+<script is:inline>
+  import Swiper from 'swiper';
+
+  new Swiper('.swiper-container', {
+    spaceBetween: 50,
+    slidesPerView: 1,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+
+<style>
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #000; /* Customize the color of navigation buttons */
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: #000; /* Customize the active pagination bullet */
+  }
+</style>

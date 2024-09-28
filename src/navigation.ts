@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink } from './utils/permalinks';
+import { getPermalink } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -10,12 +10,12 @@ export const headerData = {
       text: 'Profil',
       links: [
         {
-          text: 'Sejarah',
-          href: getPermalink('/about#sejarah'),
-        },
-        {
           text: 'Tentang Kami',
           href: getPermalink('/about#tentang'),
+        },
+        {
+          text: 'Sejarah',
+          href: getPermalink('/about#sejarah'),
         },
         {
           text: 'Tim KWT',
@@ -42,7 +42,7 @@ export const headerData = {
     },
     {
       text: 'Edusorgum',
-      href: getBlogPermalink(),
+      href: getPermalink('/edusorgum'),
     },
     {
       text: 'Media',
