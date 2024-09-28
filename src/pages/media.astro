@@ -1,8 +1,10 @@
 ---
+import { getPermalink } from '~/utils/permalinks';
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import { YouTube } from 'astro-embed';
+import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
 const metadata = {
   title: 'Media',
@@ -64,4 +66,48 @@ const metadata = {
       max-width: 100%;
     }
   </style>
+
+  <!-- Articles Widget **************** -->
+
+  <LatestArticles
+    id="images"
+    title="Galeri Gambar"
+    subtitle="Lihat galeri gambar terbaru kami."
+    items={[
+      {
+        title: 'Gambar 1',
+        href: getPermalink('imagearticles/gambar-1'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Gambar 2',
+        href: getPermalink('imagearticles/gambar-2'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Gambar 3',
+        href: getPermalink('imagearticles/gambar-3'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Gambar 4',
+        href: getPermalink('imagearticles/gambar-4'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Gambar 5',
+        href: getPermalink('imagearticles/gambar-5'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Gambar 6',
+        href: getPermalink('imagearticles/gambar-6'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </LatestArticles>
 </Layout>

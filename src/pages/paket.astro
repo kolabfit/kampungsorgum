@@ -1,5 +1,7 @@
 ---
+import { getPermalink } from '~/utils/permalinks';
 import Layout from '~/layouts/PageLayout.astro';
+import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 
@@ -56,6 +58,55 @@ const metadata = {
       Blogs.
     </Fragment> -->
   </Hero>
+  
+  <!-- Articles Widget **************** -->
 
+  <LatestArticles
+    id="blog"
+    title="Paket Kampung Sorgum"
+    subtitle="Temukan berbagai paket menarik yang kami tawarkan untuk memenuhi kebutuhan Anda."
+    items={[
+      {
+        title: 'Paket 1',
+        description: 'Paket 1 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Paket 2',
+        description: 'Paket 2 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Paket 3',
+        description: 'Paket 3 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Paket 4',
+        description: 'Paket 4 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Paket 5',
+        description: 'Paket 5 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+      {
+        title: 'Paket 6',
+        description: 'Paket 6 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/paket'),
+        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </LatestArticles>
   
 </Layout>
