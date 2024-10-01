@@ -31,7 +31,7 @@ export const headerData = {
       text: 'Produk',
       links: [
         {
-          text: 'Paket Budidaya',
+          text: 'Paket Sorgumology',
           href: getPermalink('/product#paket'),
         },
         {
