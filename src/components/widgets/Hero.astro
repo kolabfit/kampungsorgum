@@ -25,11 +25,11 @@ const {
 } = Astro.props;
 
 interface ArticleTypeID {
-  contentTypeId: 'edusorgumHeroType',
+  contentTypeId: string; 
   fields: {
-    title: EntryFieldTypes.Text,
-    content: EntryFieldTypes.RichText,
-    foto: EntryFieldTypes.AssetLink,
+    title: EntryFieldTypes.Text;
+    content: EntryFieldTypes.RichText;
+    foto: EntryFieldTypes.AssetLink;
   }
 }
 
