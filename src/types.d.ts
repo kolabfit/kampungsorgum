@@ -217,6 +217,7 @@ export interface Form {
 // WIDGETS
 export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' | 'classes'> {
   content?: string;
+  contentID?: string;
   actions?: string | CallToAction[];
   images?: ImageProps[];
 }

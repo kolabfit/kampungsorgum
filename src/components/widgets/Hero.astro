@@ -5,6 +5,10 @@ import Button from '~/components/ui/Button.astro';
 
 import type { Hero as Props } from '~/types';
 
+import { contentfulClient } from "~/lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import type { EntryFieldTypes } from "contentful";
+
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
@@ -13,9 +17,32 @@ const {
   actions = await Astro.slots.render('actions'),
   images = [], // Assume you are passing an array of images for the carousel
   id,
+  contentID = "article",
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+interface ArticleID {
+  contentTypeId: {contentID},
+  fields: {
+    title: EntryFieldTypes.Text
+    content: EntryFieldTypes.RichText,
+  }
+}
+
+const entries = await contentfulClient.getEntries<ArticleID>({
+  content_type: {contentID},
+});
+
 ---
+
+<body>
+  {entries.items.map((item) => (
+    <section>
+      <h2>{item.fields.title}</h2>
+      <article set:html={documentToHtmlString(item.fields.content)}></article>
+    </section>
+  ))}
+</body>
 
 <section class="relative md:-mt-[76px] not-prose bg-slate-100 dark:bg-slate-900" {...id ? { id } : {}}>
   <div class="carousel-container relative overflow-hidden h-screen">
