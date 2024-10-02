@@ -20,7 +20,7 @@ const {
   content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
   id,
-  contentID = "article",
+  contentID = "edusorgumHeroType",
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
 
@@ -35,7 +35,7 @@ interface ArticleTypeID {
 
 // Fetch the entry and include linked assets
 const entries = await contentfulClient.getEntries<ArticleTypeID>({
-  content_type: 'edusorgumHeroType',
+  content_type: contentID,
   include: 1,
 });
 

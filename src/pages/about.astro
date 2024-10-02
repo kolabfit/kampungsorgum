@@ -1,4 +1,5 @@
 ---
+import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Layout from '~/layouts/PageLayout.astro';
@@ -34,7 +35,7 @@ const metadata = {
   ]};
   >
     <Fragment slot="title">
-      Tentang Kami
+      Profil Kampung Sorgum
     </Fragment>
 
     <Fragment slot="subtitle">
@@ -62,18 +63,66 @@ const metadata = {
   <Features2
     id="tentang"
     title="Tentang Kami"
-    subtitle="lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam."
+    subtitle="Kampung Sorgum merupakan pionir dalam pengembangan sorgum di Desa Bojongmanggu, Kabupaten Bandung. Melalui budidaya dan inovasi pangan sorgum, kami berkomitmen mendukung ketahanan pangan lokal dengan menyediakan produk sehat, ramah lingkungan, dan bernutrisi tinggi."
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Features2>
+
+  <!-- Content Widget **************** -->
+
+  <Content
+    id="about"
+    columns={3}
+    items={[
+      {
+        icon: 'tabler:brand-dribbble',
+        callToAction: {
+          target: '_blank',
+          text: 'Dribbble',
+          href: '#',
+        },
+      },
+      {
+        icon: 'tabler:brand-behance',
+        callToAction: {
+          target: '_blank',
+          text: 'Behance',
+          href: '#',
+        },
+      },
+      {
+        icon: 'tabler:brand-pinterest',
+        callToAction: {
+          target: '_blank',
+          text: 'Pinterest',
+          href: '#',
+        },
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+      alt: 'Colorful Image',
+      loading: 'eager',
+    }}
+  >
+    <Fragment slot="content">
+      <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Tim KWT</h2>
+      <p>Kelompok Wanita Tani Sorgum Bojongmangu, yang berbasis di desa Bojongmangu, Kabupaten Bandung, menjadi kekuatan positif dalam pengembangan pertanian lokal. Didirikan pada tahun 2020, kelompok ini mengusung misi mulia untuk meningkatkan kesejahteraan para wanita tani di wilayah tersebut. Fokus utama kelompok ini adalah pada pengembangan tanaman sorgum, yang mencakup seluruh rangkaian aktivitas, mulai dari penanaman hingga pengolahan hasil. Para anggota kelompok aktif terlibat dalam setiap tahapan proses pertanian, memperoleh pengetahuan dan keterampilan yang berharga sepanjang perjalanan. </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
   <!-- Features2 Widget ************** -->
 
   <Features2
     id="sejarah"
     title="Sejarah Kami"
-    subtitle="lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam."
+    subtitle="Didirikan oleh Abah Sorgum, Kampung Sorgum berawal dari visi untuk mengenalkan sorgum sebagai alternatif pengganti gandum impor. Bersama Kelompok Wanita Tani Melati Sorgum, kami berhasil membudidayakan sorgum dalam skala besar, menghasilkan berbagai produk pangan, dan menjadi pusat edukasi pertanian sorgum."
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
