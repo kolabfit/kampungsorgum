@@ -5,12 +5,12 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import EdursogumPosts from '~/components/widgets/EdursogumPosts.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import LatestArticles from '~/components/widgets/LatestArticles.astro';
 import { SITE } from 'astrowind:config';
+import PaketShortList from '~/components/widgets/PaketShortList.astro';
 
 const metadata = {
   title: 'Kampung Sorgum',
@@ -110,68 +110,33 @@ const metadata = {
     ]}
   />
   
-  <!-- Features2 Widget ************** -->
+  <!-- PaketShortList Widget ************** -->
 
-  <Features2
+  <PaketShortList
     title="Paket Sorgum"
     subtitle="Paket yang tersedia:"
     items={[
       {
-        title: 'Headers',
-        description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
+        title: 'Paket 1',
+        description: 'Deskripsi paket 1',
         icon: 'flat-color-icons:template',
       },
       {
-        title: 'Heros',
-        description:
-          "Picture a superhero landing – epic, right? That's the job of a Hero section, making grand entrances!",
+        title: 'Paket 2',
+        description: 'Deskripsi paket 2',
         icon: 'flat-color-icons:gallery',
       },
       {
-        title: 'Features',
-        description:
-          'Where websites strut their stuff and show off superpowers. No holding back on the bragging rights here!',
+        title: 'Paket 3',
+        description: 'Deskripsi paket 3',
         icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Content',
-        description:
-          "Dive into the meat and potatoes of a site; without it, you'd just be window shopping. Content is king.",
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Call-to-Action',
-        description:
-          'That enthusiastic friend who\'s always urging, "Do it! Do it!"? Yeah, that\'s this button nudging you towards adventure.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Pricing',
-        description: 'Behold the dessert menu of the website world. Tempting choices await, can you resist?',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Testimonial',
-        description: 'Step into the gossip corner! Here, other visitors spill the beans and share the juicy details.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Contact',
-        description:
-          'Like a digital mailbox, but faster! Drop a line, ask a question, or send a virtual high-five. Ding! Message in.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Footers',
-        description: "The footer's like the credits of a movie but sprinkled with easter eggs. Time to hunt!",
-        icon: 'flat-color-icons:database',
       },
     ]}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      <div class="absolute inset-0"></div>
     </Fragment>
-  </Features2>
+  </PaketShortList>
 
   <!-- Steps Widget ****************** -->
 
@@ -263,7 +228,7 @@ const metadata = {
     ]}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+      <div class="absolute inset-0"></div>
     </Fragment>
   </LatestArticles>
 
@@ -284,7 +249,7 @@ const metadata = {
       <br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Kunjungi Kami!</span>
     </Fragment>
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-slate-100 dark:bg-slate-900"></div>
+      <div class="absolute inset-0"></div>
     </Fragment>
   </CallToAction>
 </Layout>
