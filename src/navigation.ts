@@ -19,23 +19,23 @@ export const headerData = {
         },
         {
           text: 'Tim KWT',
-          href: getPermalink('/about'),
+          href: getPermalink('/about#tim'),
         }
       ],
     },
     {
-      text: 'Paket',
+      text: 'Edutainment',
       href: getPermalink('/paket'),
     },
     {
       text: 'Produk',
       links: [
         {
-          text: 'Paket Sorgumology',
+          text: 'Toolskit Budidaya',
           href: getPermalink('/product#paket'),
         },
         {
-          text: 'Olahan Sorgum',
+          text: 'Produk Olahan Sorgum',
           href: getPermalink('/product#olahan'),
         }
       ],

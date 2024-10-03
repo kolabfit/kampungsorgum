@@ -13,6 +13,7 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
+    contentID='profileHeroType',
     images={[
     {
       src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
@@ -70,10 +71,22 @@ const metadata = {
     </Fragment>
   </Features2>
 
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    id="sejarah"
+    title="Sejarah Kami"
+    subtitle="Didirikan oleh Abah Sorgum, Kampung Sorgum berawal dari visi untuk mengenalkan sorgum sebagai alternatif pengganti gandum impor. Bersama Kelompok Wanita Tani Melati Sorgum, kami berhasil membudidayakan sorgum dalam skala besar, menghasilkan berbagai produk pangan, dan menjadi pusat edukasi pertanian sorgum."
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
   <!-- Content Widget **************** -->
 
   <Content
-    id="about"
+    id="tim"
     columns={1}
     items={[
       {
@@ -100,16 +113,4 @@ const metadata = {
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    id="sejarah"
-    title="Sejarah Kami"
-    subtitle="Didirikan oleh Abah Sorgum, Kampung Sorgum berawal dari visi untuk mengenalkan sorgum sebagai alternatif pengganti gandum impor. Bersama Kelompok Wanita Tani Melati Sorgum, kami berhasil membudidayakan sorgum dalam skala besar, menghasilkan berbagai produk pangan, dan menjadi pusat edukasi pertanian sorgum."
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
 </Layout>

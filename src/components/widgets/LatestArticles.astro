@@ -2,8 +2,6 @@
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import { Icon } from 'astro-icon/components';
-import { twMerge } from 'tailwind-merge';
-import type { Item } from '~/types';
 
 const {
   title = await Astro.slots.render('title'),
@@ -17,6 +15,8 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+const columnAmount = items.length;
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
@@ -27,7 +27,7 @@ const {
     classes={classes?.headline as Record<string, string>}
   />
 
-  <div class={`grid grid-cols-1 sm:grid-cols-${columns} lg:grid-cols-${columns} gap-4 md:gap-6`}>
+  <div class={`grid grid-cols-${columnAmount} sm:grid-cols-${columnAmount} lg:grid-cols-${columnAmount} gap-4 md:gap-6`}>
     {items.map((item) => (
       <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">
         {item.image && <img src={item.image} alt={item.image.alt} class="w-full h-auto mb-4" />}

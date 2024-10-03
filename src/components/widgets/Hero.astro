@@ -1,17 +1,10 @@
 ---
-// Your imports here
 import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
 
 import type { Hero as Props } from '~/types';
-import { contentfulClient } from "~/lib/contentful";
-import type { EntryFieldTypes } from "contentful";
-
-// Function to get the image URL from the "includes" section of the response
-function getImageURLFromID(includes, assetID) {
-  const asset = includes.Asset.find((asset) => asset.sys.id === assetID);
-  return asset ? asset.fields.file.url : null;  // Return the URL or null if not found
-}
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
 
 const {
   title = await Astro.slots.render('title'),
@@ -20,17 +13,16 @@ const {
   content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
   id,
-  contentID = "edusorgumHeroType",
-  bg = await Astro.slots.render('bg'),
+  contentID = 'berandaHeroType'
 } = Astro.props;
 
 interface ArticleTypeID {
-  contentTypeId: string; 
+  contentTypeId: string;
   fields: {
     title: EntryFieldTypes.Text;
     content: EntryFieldTypes.RichText;
     foto: EntryFieldTypes.AssetLink;
-  }
+  };
 }
 
 // Fetch the entry and include linked assets
@@ -38,29 +30,37 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
   content_type: contentID,
   include: 1,
 });
-
 ---
 
 <section class="relative md:-mt-[76px] not-prose bg-slate-100 dark:bg-slate-900" {...id ? { id } : {}}>
   <div class="carousel-container relative overflow-hidden h-screen">
     <div class="carousel-slides">
-      {entries.items.map((item) => {
-        // Get the image URL from the "foto" field
-        const imageURL = getImageURLFromID(entries.includes, item.fields.foto.sys.id);
+      {
+        entries.items.map((item) => {
+          // Get the image URL from the "foto" field
+          const asset: Asset | undefined = entries.includes?.Asset?.find(
+            (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+          );
 
-        // Render the image if the URL exists
-        return imageURL && (
-          <div class="carousel-slide">
-            <Image 
-              sizes={'100%'} 
-              class="dynamic-image rounded-md" 
-              loading="eager" 
-              src={imageURL}
-              alt="Hero image"
-            />
-          </div>
-        );
-      })}
+          // Safely access the image URL
+          const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+          // Render the image if the URL exists
+          return (
+            imageURL && (
+              <div class="carousel-slide">
+                <Image
+                  sizes={'100%'}
+                  class="dynamic-image rounded-md"
+                  loading="eager"
+                  src={imageURL}
+                  alt="Hero image"
+                />
+              </div>
+            )
+          );
+        })
+      }
     </div>
     <!-- <button class="carousel-button prev" onclick="moveSlide(-1)">&#10094;</button>
     <button class="carousel-button next" onclick="moveSlide(1)">&#10095;</button> -->
