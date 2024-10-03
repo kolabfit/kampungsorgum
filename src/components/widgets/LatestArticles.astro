@@ -16,7 +16,7 @@ const {
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
 
-const columnAmount = items.length;
+const parameter = `grid grid-cols-6 sm:grid-cols-6 lg:grid-cols-6 gap-4 md:gap-6`;
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
@@ -27,7 +27,7 @@ const columnAmount = items.length;
     classes={classes?.headline as Record<string, string>}
   />
 
-  <div class={`grid grid-cols-${columnAmount} sm:grid-cols-${columnAmount} lg:grid-cols-${columnAmount} gap-4 md:gap-6`}>
+  <div class={parameter} style=`grid-template-columns=${columns}`>
     {items.map((item) => (
       <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">
         {item.image && <img src={item.image} alt={item.image.alt} class="w-full h-auto mb-4" />}

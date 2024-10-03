@@ -25,7 +25,7 @@ export const headerData = {
     },
     {
       text: 'Edutainment',
-      href: getPermalink('/paket'),
+      href: getPermalink('/edutainment'),
     },
     {
       text: 'Produk',

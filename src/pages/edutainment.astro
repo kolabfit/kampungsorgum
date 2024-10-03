@@ -6,7 +6,7 @@ import LatestArticles from '~/components/widgets/LatestArticles.astro';
 import Hero from '~/components/widgets/Hero.astro';
 
 const metadata = {
-  title: 'Paket',
+  title: 'Edutainment',
 };
 ---
 
@@ -15,6 +15,7 @@ const metadata = {
   <!-- Hero Widget ******************* -->
   
   <Hero
+    contentID='edutimentHeroType',
     images={[
     {
       src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
@@ -37,11 +38,11 @@ const metadata = {
   ]};
   >
     <Fragment slot="title">
-      Paket
+      Edutainment
     </Fragment>
 
     <Fragment slot="subtitle">
-      Temukan berbagai paket menarik yang kami tawarkan untuk memenuhi kebutuhan Anda.
+      Temukan berbagai edukasi menarik yang kami tawarkan untuk memenuhi kebutuhan Anda.
     </Fragment>
 
     <Fragment slot="bg">
@@ -63,43 +64,43 @@ const metadata = {
 
   <LatestArticles
     id="blog"
-    title="Paket Kampung Sorgum"
-    subtitle="Temukan berbagai paket menarik yang kami tawarkan untuk memenuhi kebutuhan Anda."
+    title="Edutainment Kampung Sorgum"
+    subtitle="Temukan berbagai edukasi menarik yang kami tawarkan untuk memenuhi kebutuhan Anda."
     items={[
       {
-        title: 'Paket 1',
-        description: 'Paket 1 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 1',
+        description: 'Edutainment 1 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
       {
-        title: 'Paket 2',
-        description: 'Paket 2 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 2',
+        description: 'Edutainment 2 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
       {
-        title: 'Paket 3',
-        description: 'Paket 3 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 3',
+        description: 'Edutainment 3 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
       {
-        title: 'Paket 4',
-        description: 'Paket 4 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 4',
+        description: 'Edutainment 4 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
       {
-        title: 'Paket 5',
-        description: 'Paket 5 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 5',
+        description: 'Edutainment 5 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
       {
-        title: 'Paket 6',
-        description: 'Paket 6 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
+        title: 'Edutainment 6',
+        description: 'Edutainment 6 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
+        href: getPermalink('/edukasi'),
         image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
       },
     ]}
