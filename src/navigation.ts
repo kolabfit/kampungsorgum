@@ -63,11 +63,11 @@ export const footerData = {
       links: [
         {
           text: 'Cooking Class',
-          href: getPermalink('/package#cookingClass'),
+          href: getPermalink('/edutainment'),
         },
         {
           text: 'Mini Tour',
-          href: getPermalink('/package#miniTour'),
+          href: getPermalink('/edutainment'),
         },
       ],
     },

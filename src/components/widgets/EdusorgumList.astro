@@ -1,0 +1,75 @@
+---
+import { getPermalink } from '~/utils/permalinks';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import { Icon } from 'astro-icon/components';
+
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline = await Astro.slots.render('tagline'),
+  columns = 6,
+  defaultIcon,
+  id,
+  isDark = false,
+  classes = {},
+  contentID = 'edusorgumType',
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+interface ArticleTypeID {
+  contentTypeId: string;
+  fields: {
+    title: EntryFieldTypes.Text;
+    icon: EntryFieldTypes.Text;
+    subtitle: EntryFieldTypes.RichText;
+    foto: EntryFieldTypes.AssetLink;
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<ArticleTypeID>({
+  content_type: contentID,
+  include: 1,
+});
+--- 
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <Headline
+    title={title}
+    subtitle={subtitle}
+    tagline={tagline}
+    classes={classes?.headline as Record<string, string>}
+  />
+
+  <div class=`grid grid-cols-6 grid-cols-${columns} gap-4 md:gap-6`>
+    {
+      entries.items.map((item) => {
+        // Get the image URL from the "foto" field
+        const asset: Asset | undefined = entries.includes?.Asset?.find(
+          (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+        );
+
+        // Safely access the image URL
+        const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+        const link = getPermalink('edusorgum/' + item?.sys?.id);
+
+        return (
+          <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">
+            <img src={imageURL ?? ''} alt={item.fields.title} class="w-full h-auto mb-4" />
+            {item.fields.icon && <Icon name={item.fields.icon} class='mb-2 w-10 h-10 text-primary' />}
+            <h3 class="text-lg font-bold mb-2">{item.fields.title}</h3>
+            <p class="text-sm text-muted mb-4">{item.fields.subtitle}</p>
+            <a href={link} class="btn btn-primary" style="font-size: small;">
+              Selengkapnya
+            </a>
+          </article>
+        );
+      })
+    }
+  </div>
+</WidgetWrapper>

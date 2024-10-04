@@ -4,6 +4,31 @@ import Hero from '~/components/widgets/Hero.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import ContactApps from '~/components/widgets/ContactApps.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { EntryFieldTypes } from 'contentful';
+
+// Define the structure of the content type based on your provided fields
+interface ProfileKampungSorgumType {
+  contentTypeId: string;
+  fields: {
+    entrytitle: EntryFieldTypes.Text;
+    judul: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Text;
+  };
+}
+
+const entries = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+  content_type: 'kontakType',
+  'fields.entrytitle': 'kontak',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entries.items[0]?.fields;
+
+const judul = profileEntry?.judul;
+const description = profileEntry?.description;
+
 const metadata = {
   title: 'Kontak',
 };
@@ -16,11 +41,11 @@ const metadata = {
   contentID='kontakHeroType'
 >
   <Fragment slot="title">
-    Hubungi Kami
+    {judul}
   </Fragment>
 
   <Fragment slot="subtitle">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+    {description}
   </Fragment>
 
   <Fragment slot="bg">

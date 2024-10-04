@@ -4,11 +4,50 @@ import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { EntryFieldTypes } from 'contentful';
+
+// Define the structure of the content type based on your provided fields
+interface ProfileKampungSorgumType {
+  contentTypeId: string;
+  fields: {
+    entrytitle: EntryFieldTypes.Text;
+    judulProfil: EntryFieldTypes.Text;
+    caption: EntryFieldTypes.Text;
+    tentangkami?: EntryFieldTypes.Text;
+    captiontentangkami?: EntryFieldTypes.Text;
+    fototimkwt?: EntryFieldTypes.AssetLink; // Asset for images
+    judultimkwt?: EntryFieldTypes.Text;
+    captiontimkwt?: EntryFieldTypes.Text;
+    judulsejarahkami?: EntryFieldTypes.Text;
+    captionsejarahkami?: EntryFieldTypes.Text;
+  };
+}
+
+const entries = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+  content_type: 'profileKampungSorgumType',
+  'fields.entrytitle': 'profile',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entries.items[0]?.fields;
+
+const judulProfil = profileEntry?.judulProfil;
+const caption = profileEntry?.caption;
+const tentangkami = profileEntry?.tentangkami;
+const captiontentangkami = profileEntry?.captiontentangkami;
+const judultimkwt = profileEntry?.judultimkwt;
+const captiontimkwt = profileEntry?.captiontimkwt;
+const judulsejarahkami = profileEntry?.judulsejarahkami;
+const captionsejarahkami = profileEntry?.captionsejarahkami;
+
+const imageURL = profileEntry?.fototimkwt && 'fields' in profileEntry.fototimkwt && profileEntry.fototimkwt.fields.file ? profileEntry.fototimkwt.fields.file.url : null;
+
 const metadata = {
   title: 'About Us',
 };
 ---
-
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
@@ -16,11 +55,11 @@ const metadata = {
     contentID='profileHeroType',
   >
     <Fragment slot="title">
-      Profil Kampung Sorgum
+      {judulProfil}
     </Fragment>
 
     <Fragment slot="subtitle">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+      {caption}
     </Fragment>
 
     <Fragment slot="bg">
@@ -43,8 +82,8 @@ const metadata = {
 
   <Features2
     id="tentang"
-    title="Tentang Kami"
-    subtitle="Kampung Sorgum merupakan pionir dalam pengembangan sorgum di Desa Bojongmanggu, Kabupaten Bandung. Melalui budidaya dan inovasi pangan sorgum, kami berkomitmen mendukung ketahanan pangan lokal dengan menyediakan produk sehat, ramah lingkungan, dan bernutrisi tinggi."
+    title={tentangkami}
+    subtitle={captiontentangkami}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
@@ -55,8 +94,8 @@ const metadata = {
 
   <Features2
     id="sejarah"
-    title="Sejarah Kami"
-    subtitle="Didirikan oleh Abah Sorgum, Kampung Sorgum berawal dari visi untuk mengenalkan sorgum sebagai alternatif pengganti gandum impor. Bersama Kelompok Wanita Tani Melati Sorgum, kami berhasil membudidayakan sorgum dalam skala besar, menghasilkan berbagai produk pangan, dan menjadi pusat edukasi pertanian sorgum."
+    title={judulsejarahkami}
+    subtitle={captionsejarahkami}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
@@ -79,14 +118,14 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+      src: imageURL,
       alt: 'Colorful Image',
       loading: 'eager',
     }}
   >
     <Fragment slot="content">
-      <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Tim KWT</h2>
-      <p>Kelompok Wanita Tani Sorgum Bojongmangu, yang berbasis di desa Bojongmangu, Kabupaten Bandung, menjadi kekuatan positif dalam pengembangan pertanian lokal. Didirikan pada tahun 2020, kelompok ini mengusung misi mulia untuk meningkatkan kesejahteraan para wanita tani di wilayah tersebut. Fokus utama kelompok ini adalah pada pengembangan tanaman sorgum, yang mencakup seluruh rangkaian aktivitas, mulai dari penanaman hingga pengolahan hasil. Para anggota kelompok aktif terlibat dalam setiap tahapan proses pertanian, memperoleh pengetahuan dan keterampilan yang berharga sepanjang perjalanan. </p>
+      <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{judultimkwt}</h2>
+      <p>{captiontimkwt}</p>
     </Fragment>
 
     <Fragment slot="bg">

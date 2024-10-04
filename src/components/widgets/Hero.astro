@@ -28,7 +28,6 @@ interface ArticleTypeID {
 // Fetch the entry and include linked assets
 const entries = await contentfulClient.getEntries<ArticleTypeID>({
   content_type: contentID,
-  include: 1,
 });
 ---
 
@@ -185,6 +184,14 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
     }
 
     function setPage() {
+      if (typeof currentIndex === 'undefined') {
+        currentIndex = 0;
+      }
+
+      if (typeof autoScrollInterval === 'undefined') {
+        autoScrollInterval = null;
+      }
+
       const images = document.querySelectorAll('.dynamic-image');
       const screenWidth = screen.width;
       const screenHeight = screen.height;
@@ -202,6 +209,11 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
       setPage();
       autoScrollSlides();
     });
+
+document.addEventListener('astro:after-swap', () => {
+      setPage();
+      autoScrollSlides();
+});
 
     window.addEventListener('resize', setPage);
     window.addEventListener('load', function () {
