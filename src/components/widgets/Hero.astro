@@ -156,11 +156,16 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
     }
   </style>
 
-  <script is:inline data-astro-rerun>
+  <script is:inline data-astro-rerun data-astro-run>
     setPage();
 
-    let currentIndex = 0;
-    let autoScrollInterval;
+    if (typeof currentIndex === 'undefined') {
+      currentIndex = 0;
+    }
+
+    if (typeof autoScrollInterval === 'undefined') {
+      autoScrollInterval = null;
+    }
 
     function moveSlide(direction) {
       const slides = document.querySelector('.carousel-slides');
