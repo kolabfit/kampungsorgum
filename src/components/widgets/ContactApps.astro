@@ -3,21 +3,44 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid2 from '~/components/ui/ItemGrid2.astro';
 import type { Features as Props } from '~/types';
+import { contentfulClient } from '~/lib/contentful';
+import type { EntryFieldTypes } from 'contentful';
 
 const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
-  items = [],
   columns = 2,
   defaultIcon,
-
   id,
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+interface ArticleTypeID {
+  contentTypeId: string;
+  fields: {
+    logo: EntryFieldTypes.Text;
+    usernameKontak: EntryFieldTypes.Text;
+    url: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<ArticleTypeID>({
+  content_type: 'kontakListType',
+});
+
+const items = entries.items.map((item) => {
+  return {
+    icon: item.fields.logo,
+    href: item.fields.url,
+    target: '_blank',
+  };
+});
 ---
+
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
   <Headline title={title} subtitle={subtitle} tagline={tagline} classes={classes?.headline as Record<string, string>} />

@@ -16,7 +16,7 @@ const {
   contentID = 'berandaHeroType'
 } = Astro.props;
 
-interface ArticleTypeID {
+interface ArticleContentType {
   contentTypeId: string;
   fields: {
     title: EntryFieldTypes.Text;
@@ -26,7 +26,7 @@ interface ArticleTypeID {
 }
 
 // Fetch the entry and include linked assets
-const entries = await contentfulClient.getEntries<ArticleTypeID>({
+const entries = await contentfulClient.getEntries<ArticleContentType>({
   content_type: contentID,
 });
 ---
@@ -135,7 +135,7 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
       text-align: center;
       color: white;
       z-index: 10;
-      background: rgba(0, 0, 0, 0.5); /* Darken the background for better text readability */
+      background: rgba(0, 0, 0, 0.25); /* Darken the background for better text readability */
     }
     .carousel-button {
       position: absolute;

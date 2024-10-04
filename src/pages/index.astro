@@ -12,6 +12,98 @@ import LatestArticles from '~/components/widgets/LatestArticles.astro';
 import { SITE } from 'astrowind:config';
 import PaketShortList from '~/components/widgets/PaketShortList.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+import ContactApps from '~/components/widgets/ContactApps.astro';
+
+function limitWords(text: string, wordLimit: number = 10): string {
+  const words = text.split(' ');
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + '...';
+  }
+  return text;
+}
+
+interface PaketShortListType {
+  contentTypeId: string;
+  fields: {
+    namaPaket: EntryFieldTypes.Text;
+    judul: EntryFieldTypes.Text;
+    isiPaket: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch the entry and include linked assets
+const shortPaket = await contentfulClient.getEntries<PaketShortListType>({
+  content_type: 'berandaPaketSorgumType',
+});
+
+const items = shortPaket.items.map((item) => {
+  return {
+    title: item.fields.judul,
+    description: item.fields.isiPaket,
+    href: getPermalink('/edutainment'),
+  };
+});
+
+interface ProductListType {
+  contentTypeId: string;
+  fields: {
+    namaFile: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
+    judul: EntryFieldTypes.Text;
+    caption: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch the entry and include linked assets
+const productList = await contentfulClient.getEntries<ProductListType>({
+  content_type: 'berandaProdukSorgumType',
+});
+
+const productListitems = productList.items.map((item) => {
+  
+    const asset: Asset | undefined = productList.includes?.Asset?.find(
+      (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+    );
+
+    // Safely access the image URL
+    const imageProductURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+  return {
+    title: item.fields.judul,
+    description: limitWords(item.fields.caption, 10),
+    href: getPermalink('/product'),
+    image: imageProductURL,
+  };
+});
+
+// Define the structure of the content type based on your provided fields
+interface ProfileKampungSorgumType {
+  contentTypeId: string;
+  fields: {
+    namaFile: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
+  };
+}
+
+const entries = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+  content_type: 'berandaManfaatType',
+  'fields.namaFile': 'fotosorgum',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entries.items[0]?.fields;
+
+const namaFile = profileEntry?.namaFile;
+const asset: Asset | undefined = entries.includes?.Asset?.find(
+  (asset: Asset) => asset?.sys?.id === entries.items[0]?.fields?.foto?.sys?.id
+);
+
+// Safely access the image URL
+const imageManfaatURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
 const metadata = {
   title: 'Kampung Sorgum',
   ignoreTitleTemplate: true,
@@ -22,7 +114,8 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
-    contentID='berandaHeroType',
+    contentID="berandaHeroType"
+    ,
     actions={[
       {
         variant: 'primary',
@@ -32,7 +125,8 @@ const metadata = {
         // icon: 'tabler:download',
       },
       // { text: 'Learn more', href: '#features' },
-    ]},
+    ]}
+    ,
   >
     <Fragment slot="title">
       {SITE?.name}
@@ -90,28 +184,14 @@ const metadata = {
       },
     ]}
   />
-  
+
   <!-- PaketShortList Widget ************** -->
 
   <PaketShortList
     title="Edutainment"
     subtitle="Paket yang tersedia:"
     items={[
-      {
-        title: 'Paket 1',
-        description: 'Deskripsi paket 1',
-        icon: 'flat-color-icons:template',
-      },
-      {
-        title: 'Paket 2',
-        description: 'Deskripsi paket 2',
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Paket 3',
-        description: 'Deskripsi paket 3',
-        icon: 'flat-color-icons:approval',
-      },
+      ...items
     ]}
   >
     <Fragment slot="bg">
@@ -127,18 +207,18 @@ const metadata = {
       {
         title: 'Tahan Kondisi Kering',
         description:
-          "Sorgum adalah tanaman yang tahan terhadap kekeringan, sehingga cocok untuk ditanam di daerah dengan curah hujan yang rendah. Ini membuatnya menjadi alternatif yang baik untuk tanaman lain seperti jagung yang membutuhkan lebih banyak air.",
+          'Sorgum adalah tanaman yang tahan terhadap kekeringan, sehingga cocok untuk ditanam di daerah dengan curah hujan yang rendah. Ini membuatnya menjadi alternatif yang baik untuk tanaman lain seperti jagung yang membutuhkan lebih banyak air.',
         icon: 'tabler:sun-wind',
       },
       {
         title: 'Kaya Nutrisi',
         description:
-          "Sorgum merupakan sumber karbohidrat, serat, dan protein yang baik. Selain itu, sorgum juga mengandung vitamin B, magnesium, kalium, dan antioksidan yang bermanfaat bagi kesehatan, termasuk menjaga kesehatan pencernaan dan mengurangi risiko penyakit kronis.",
+          'Sorgum merupakan sumber karbohidrat, serat, dan protein yang baik. Selain itu, sorgum juga mengandung vitamin B, magnesium, kalium, dan antioksidan yang bermanfaat bagi kesehatan, termasuk menjaga kesehatan pencernaan dan mengurangi risiko penyakit kronis.',
         icon: 'tabler:activity-heartbeat',
       },
       {
         title: 'Bebas Gluten',
-        description: 
+        description:
           'Sorgum adalah sumber karbohidrat yang bebas gluten, sehingga menjadi alternatif yang aman dan sehat untuk orang yang memiliki sensitivitas atau intoleransi terhadap gluten, seperti penderita penyakit celiac.',
         icon: 'tabler:milk-off',
       },
@@ -150,8 +230,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
+      src: imageManfaatURL || '',
+      alt: namaFile,
     }}
   />
 
@@ -165,53 +245,25 @@ const metadata = {
   <!-- Product Widget **************** -->
 
   <LatestArticles
-    id="blog"
     tagline="Produk Terbaru!"
     title="Produk Sorgum"
     subtitle="Temukan berbagai produk olahan sorgum yang sehat, lezat, dan ramah lingkungan."
+    buttonText="Lihat Semua Produk"
     items={[
-      {
-        title: 'Sorgum Flour',
-        description: 'Tepung sorgum yang berkualitas tinggi, bebas gluten, dan kaya nutrisi. Cocok untuk membuat roti, kue, dan makanan sehat lainnya.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Sorgum Snacks',
-        description: 'Makanan ringan sehat dari sorgum yang renyah dan lezat. Tersedia dalam berbagai varian rasa dan kemasan praktis.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Sorgum Drink',
-        description: 'Minuman sehat dari sorgum yang menyegarkan dan bergizi. Tersedia dalam berbagai varian rasa dan kemasan praktis.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Sorgum Snacks',
-        description: 'Makanan ringan sehat dari sorgum yang renyah dan lezat. Tersedia dalam berbagai varian rasa dan kemasan praktis.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Sorgum Drink',
-        description: 'Minuman sehat dari sorgum yang menyegarkan dan bergizi. Tersedia dalam berbagai varian rasa dan kemasan praktis.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Sorgum Flour',
-        description: 'Tepung sorgum yang berkualitas tinggi, bebas gluten, dan kaya nutrisi. Cocok untuk membuat roti, kue, dan makanan sehat lainnya.',
-        href: getPermalink('/product'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
+      ...productListitems
     ]}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0"></div>
     </Fragment>
   </LatestArticles>
+
+  <!-- ContactApps Widget ************ -->
+
+  <ContactApps
+    title="Hubungi Kami"
+    subtitle="Jika Anda memiliki pertanyaan atau ingin berdiskusi lebih lanjut, jangan ragu untuk menghubungi kami."
+  >
 
   <!-- CallToAction Widget *********** -->
 

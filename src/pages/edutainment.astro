@@ -5,6 +5,71 @@ import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+
+interface EdutainmentArticleType {
+  contentTypeId: string;
+  fields: {
+    entryname: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
+    judul: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<EdutainmentArticleType>({
+  content_type: 'edutimentPaketType',
+});
+
+function limitWords(text: string, wordLimit: number = 10): string {
+  const words = text.split(' ');
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + '...';
+  }
+  return text;
+}
+
+const items = entries.items.map((item) => {
+  
+  const asset: Asset | undefined = entries.includes?.Asset?.find(
+            (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+          );
+
+          // Safely access the image URL
+          const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+  return {
+    title: item.fields.judul,
+    description: limitWords(item.fields.description, 15),
+    href: getPermalink('/edutainment/' + item.fields.entryname),
+    image: imageURL
+  };
+});
+
+// Define the structure of the content type based on your provided fields
+interface ProfileKampungSorgumType {
+  contentTypeId: string;
+  fields: {
+    entryname: EntryFieldTypes.Text;
+    juduledutiment: EntryFieldTypes.Text;
+    captionedutiment: EntryFieldTypes.Text;
+  };
+}
+
+const entriesType = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+  content_type: 'edutimentType',
+  'fields.entryname': 'judulandcaption',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entriesType.items[0]?.fields;
+
+const juduledutiment = profileEntry?.juduledutiment;
+const captionedutiment = profileEntry?.captionedutiment;
+
 const metadata = {
   title: 'Edutainment',
 };
@@ -18,11 +83,11 @@ const metadata = {
     contentID='edutimentHeroType',
   >
     <Fragment slot="title">
-      Edutainment
+      {juduledutiment}
     </Fragment>
 
     <Fragment slot="subtitle">
-      Temukan berbagai edukasi menarik yang kami tawarkan untuk memenuhi kebutuhan Anda.
+      {captionedutiment}
     </Fragment>
 
     <Fragment slot="bg">
@@ -43,46 +108,13 @@ const metadata = {
   <!-- Articles Widget **************** -->
 
   <LatestArticles
+    buttonText="Lihat Lebih Lanjut"
+    columns={5}
     id="blog"
     title="Edutainment Kampung Sorgum"
     subtitle="Temukan berbagai edukasi menarik yang kami tawarkan untuk memenuhi kebutuhan Anda."
     items={[
-      {
-        title: 'Edutainment 1',
-        description: 'Edutainment 1 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Edutainment 2',
-        description: 'Edutainment 2 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Edutainment 3',
-        description: 'Edutainment 3 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Edutainment 4',
-        description: 'Edutainment 4 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Edutainment 5',
-        description: 'Edutainment 5 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Edutainment 6',
-        description: 'Edutainment 6 adalah edukasi yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/edukasi'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
+      ...items
     ]}
   >
     <Fragment slot="bg">

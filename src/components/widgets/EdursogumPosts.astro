@@ -1,12 +1,10 @@
 ---
-
-import Grid from '~/components/blog/Grid.astro';
-
 import { getPermalink } from '~/utils/permalinks';
-import { findLatestPosts } from '~/utils/blog';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Widget } from '~/types';
 import Button from '../ui/Button.astro';
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
 
 export interface Props extends Widget {
   title?: string;
@@ -17,10 +15,8 @@ export interface Props extends Widget {
 }
 
 const {
-  title = await Astro.slots.render('title'),
   linkText = 'View all posts',
   linkUrl = getPermalink('/edusorgum'),
-  information = await Astro.slots.render('information'),
   count = 4,
 
   id,
@@ -28,16 +24,39 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+
+// Define the structure of the content type based on your provided fields
+interface ProfileKampungSorgumType {
+  contentTypeId: string;
+  fields: {
+    entryname: EntryFieldTypes.Text;
+    juduledutiment: EntryFieldTypes.Text;
+    captionedutiment: EntryFieldTypes.Text;
+  };
+}
+
+const entriesType = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+  content_type: 'edutimentType',
+  'fields.entryname': 'judulandcaption',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entriesType.items[0]?.fields;
+
+const juduledutiment = profileEntry?.juduledutiment;
+const captionedutiment = profileEntry?.captionedutiment;
 ---
 
 {
     <WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container as string} bg={bg}>
       <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
-        {title && (
+        {(
           <div class="md:max-w-sm">
             <h2
               class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2"
-              set:html={title}
+              set:html={juduledutiment}
             />
               <Button variant="link" href={linkUrl}>
                 {' '}
@@ -46,7 +65,7 @@ const {
           </div>
         )}
 
-        {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
+        {<p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={captionedutiment} />}
       </div>
     </WidgetWrapper>
     <Fragment />
