@@ -157,8 +157,6 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
   </style>
 
   <script is:inline data-astro-rerun data-astro-run>
-    setPage();
-
     if (typeof currentIndex === 'undefined') {
       currentIndex = 0;
     }
