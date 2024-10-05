@@ -101,16 +101,16 @@ export const footerData = {
       title: 'Tentang Kami',
       links: [
         {
-          text: 'Sejarah',
-          href: getPermalink('/about#features'),
+          text: 'Profil',
+          href: getPermalink('/about#tentang'),
         },
         {
-          text: 'Profil',
-          href: getPermalink('/about'),
+          text: 'Sejarah',
+          href: getPermalink('/about#sejarah'),
         },
         {
           text: 'Tim KWT',
-          href: getPermalink('/about'),
+          href: getPermalink('/about#tim'),
         },
       ],
     },
