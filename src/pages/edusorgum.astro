@@ -5,6 +5,29 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import EdusorgumList from '~/components/widgets/EdusorgumList.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+
+// Define the structure of the content type based on your provided fields
+interface EdusorgumHalamanType {
+  contentTypeId: string;
+  fields: {
+    judulHero: EntryFieldTypes.Text;
+    subtitleHero: EntryFieldTypes.Text;
+  };
+}
+
+const entriesType = await contentfulClient.getEntries<EdusorgumHalamanType>({
+  content_type: 'edusorgumType',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entriesType.items[0]?.fields;
+
+const judulHero = profileEntry?.judulHero;
+const subtitleHero = profileEntry?.subtitleHero;
+
 const metadata = {
   title: 'Edusorgum',
 };
@@ -15,33 +38,13 @@ const metadata = {
 
   <Hero
   contentID='edusorgumHeroType',
-    images={[
-    {
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Image 1 description',
-      width: 1024,
-      height: 576,
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Image 2 description',
-      width: 1024,
-      height: 576,
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Image 3 description',
-      width: 1024,
-      height: 576,
-    },
-  ]};
   >
     <Fragment slot="title">
-      Edusorgum
+      {judulHero}
     </Fragment>
 
     <Fragment slot="subtitle">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+      {subtitleHero}
     </Fragment>
 
     <Fragment slot="bg">
@@ -62,7 +65,6 @@ const metadata = {
   <!-- Articles Widget **************** -->
 
   <EdusorgumList
-    contentID='edusorgumType',
     id="paket"
     title="Artikel Edusorgum"
     subtitle="Temukan berbagai artikel menarik yang kami tawarkan untuk memenuhi kebutuhan Anda."

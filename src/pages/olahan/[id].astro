@@ -1,0 +1,118 @@
+---
+import { getPermalink } from '~/utils/permalinks';
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+import ContactApps from '~/components/widgets/ContactApps.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+// Define the Contentful content type interface
+interface ProdukType {
+  contentTypeId: string;
+  fields: {
+    idProduk: EntryFieldTypes.Text;
+    namaProduk: EntryFieldTypes.Text;
+    fotoProduk: EntryFieldTypes.AssetLink;
+    deskripsiProduk: EntryFieldTypes.Text;
+    hargaProduk: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch dynamic data for each possible route using getStaticPaths
+export async function getStaticPaths() {
+  // Fetch all entries of type 'produkOlahanType' from Contentful
+  const entries = await contentfulClient.getEntries<ProdukType>({
+    content_type: 'produkOlahanType',
+  });
+
+  // Generate a list of paths for all `idProduk` values
+  return entries.items.map((item) => ({
+    params: { id: item.fields.idProduk },
+  }));
+}
+
+// Get the current route parameter
+const { id } = Astro.params;
+
+// Fetch the specific entry based on the dynamic `id`
+const entries = await contentfulClient.getEntries<ProdukType>({
+  content_type: 'produkOlahanType',
+  'fields.idProduk': id, // Use the `id` from URL to match the idProduk in Contentful
+});
+
+// Handle case where no entries are found
+if (!entries.items.length) {
+  throw new Error('Content not found');
+}
+
+// Get the first item (as we are only fetching a single entry with this id)
+const item = entries.items[0];
+
+// Fetch the associated asset (if it exists)
+const asset: Asset | undefined = entries.includes?.Asset?.find(
+  (asset: Asset) => asset?.sys?.id === item?.fields?.fotoProduk?.sys?.id
+);
+
+// Safely access the image URL
+const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+// Set metadata for the page
+const metadata = {
+  title: item.fields.namaProduk || 'Olahan',
+};
+
+// Extract fields for rendering in the Content component
+const { namaProduk, deskripsiProduk, hargaProduk } = item.fields;
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Section -->
+  <Hero 
+    contentID='produkHeroType',
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Produk - Olahan',
+        href: getPermalink('/product'),
+      },
+    ]},
+  >
+    <Fragment slot="title">
+      Produk Olahan
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </Hero>
+
+  <!-- Content Section -->
+  <Content
+    image={{
+      src: imageURL,
+      alt: 'Product Image',
+      loading: 'eager',
+    }}
+  >
+    <Fragment slot="content">
+      <h2 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{namaProduk}</h2>
+      <p>{deskripsiProduk}</p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0"></div>
+    </Fragment>
+  </Content>
+  
+  <CallToAction
+    title="Estimasi Harga:"
+    subtitle={hargaProduk}
+  />
+
+  <!-- Kontak Pembelian -->
+
+  <ContactApps
+    title='Pesan Melalui Kontak Kami'
+  />
+</Layout>

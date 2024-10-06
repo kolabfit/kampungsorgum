@@ -6,6 +6,56 @@ import Hero from '~/components/widgets/Hero.astro';
 import { YouTube } from 'astro-embed';
 import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+
+interface GalleryImagesType {
+  contentTypeId: string;
+  fields: {
+    namaFile: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<GalleryImagesType>({
+  content_type: 'mediaImagesType',
+});
+
+const items = entries.items.map((item) => {
+  
+  const asset: Asset | undefined = entries.includes?.Asset?.find(
+            (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+          );
+
+          // Safely access the image URL
+          const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+  return {
+    href: getPermalink('/mediapage/' + item.fields.namaFile),
+    image: imageURL
+  };
+});
+
+interface EdusorgumHalamanType {
+  contentTypeId: string;
+  fields: {
+    judulHero: EntryFieldTypes.Text;
+    subtitleHero: EntryFieldTypes.Text;
+  };
+}
+
+const entriesType = await contentfulClient.getEntries<EdusorgumHalamanType>({
+  content_type: 'mediaType',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entriesType.items[0]?.fields;
+
+const judulHero = profileEntry?.judulHero;
+const subtitleHero = profileEntry?.subtitleHero;
+
 const metadata = {
   title: 'Media',
 };
@@ -17,11 +67,12 @@ const metadata = {
   <Hero
     contentID='mediaHeroType',
   >
-    <Fragment slot="title"> Gallery </Fragment>
+    <Fragment slot="title">
+      {judulHero}
+    </Fragment>
 
     <Fragment slot="subtitle">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum
-      itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+      {subtitleHero}
     </Fragment>
 
     <Fragment slot="bg">
@@ -52,38 +103,11 @@ const metadata = {
   <LatestArticles
     id="images"
     title="Galeri Gambar"
+    columns={2}
     subtitle="Lihat galeri gambar terbaru kami."
+    buttonText="Perbesar"
     items={[
-      {
-        title: 'Gambar 1',
-        href: getPermalink('imagearticles/gambar-1'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Gambar 2',
-        href: getPermalink('imagearticles/gambar-2'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Gambar 3',
-        href: getPermalink('imagearticles/gambar-3'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Gambar 4',
-        href: getPermalink('imagearticles/gambar-4'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Gambar 5',
-        href: getPermalink('imagearticles/gambar-5'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Gambar 6',
-        href: getPermalink('imagearticles/gambar-6'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
+      ...items
     ]}
   >
     <Fragment slot="bg">

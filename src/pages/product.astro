@@ -5,6 +5,96 @@ import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+
+interface ProdukType {
+  contentTypeId: string;
+  fields: {
+    idProduk: EntryFieldTypes.Text;
+    namaProduk: EntryFieldTypes.Text;
+    fotoProduk: EntryFieldTypes.AssetLink;
+    deskripsiProduk: EntryFieldTypes.Text;
+    hargaProduk: EntryFieldTypes.Text;
+  };
+}
+
+const toolskit = await contentfulClient.getEntries<ProdukType>({
+  content_type: 'produkToolskitType',
+});
+
+const olahan = await contentfulClient.getEntries<ProdukType>({
+  content_type: 'produkOlahanType',
+});
+
+function limitWords(text: string, wordLimit: number = 15): string {
+  const words = text.split(' ');
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + '...';
+  }
+  return text;
+}
+
+const toolskitItems = toolskit.items.map((item) => {
+  const asset: Asset | undefined = toolskit.includes?.Asset?.find(
+            (asset: Asset) => asset?.sys?.id === item?.fields?.fotoProduk?.sys?.id
+          );
+
+          // Safely access the image URL
+          const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+  return {
+    title: item.fields.namaProduk,
+    description: limitWords(item.fields.deskripsiProduk, 15),
+    href: getPermalink('/toolskit/' + item.fields.idProduk),
+    image: imageURL
+  };
+});
+
+const olahanItems = olahan.items.map((item) => {
+  const asset: Asset | undefined = olahan.includes?.Asset?.find(
+            (asset: Asset) => asset?.sys?.id === item?.fields?.fotoProduk?.sys?.id
+          );
+
+          // Safely access the image URL
+          const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+  return {
+    title: item.fields.namaProduk,
+    description: limitWords(item.fields.deskripsiProduk, 15),
+    href: getPermalink('/olahan/' + item.fields.idProduk),
+    image: imageURL
+  };
+});
+
+// Define the structure of the content type based on your provided fields
+interface ProdukHalamanType {
+  contentTypeId: string;
+  fields: {
+    judulHero: EntryFieldTypes.Text;
+    subtitleHero: EntryFieldTypes.Text;
+    judulToolskit: EntryFieldTypes.Text;
+    deskripsiToolskit: EntryFieldTypes.Text;
+    judulOlahan: EntryFieldTypes.Text;
+    deskripsiOlahan: EntryFieldTypes.Text;
+  };
+}
+
+const entriesType = await contentfulClient.getEntries<ProdukHalamanType>({
+  content_type: 'produkType',
+  limit: 1,
+});
+
+// Map the data to be used in the template
+const profileEntry = entriesType.items[0]?.fields;
+
+const judulHero = profileEntry?.judulHero;
+const subtitleHero = profileEntry?.subtitleHero;
+const judulToolskit = profileEntry?.judulToolskit;
+const deskripsiToolskit = profileEntry?.deskripsiToolskit;
+const judulOlahan = profileEntry?.judulOlahan;
+const deskripsiOlahan = profileEntry?.deskripsiOlahan;
+
 const metadata = {
   title: 'Produk',
 };
@@ -17,11 +107,11 @@ const metadata = {
     contentID='produkHeroType',
   >
     <Fragment slot="title">
-      Produk Kami
+      {judulHero}
     </Fragment>
 
     <Fragment slot="subtitle">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius, temporibus incidunt ipsam, enim, atque laborum itaque inventore nihil totam nobis iste repudiandae. Optio, sit? Cumque soluta laborum temporibus itaque quam.
+      {subtitleHero}
     </Fragment>
 
     <Fragment slot="bg">
@@ -43,45 +133,12 @@ const metadata = {
 
   <LatestArticles
     id="paket"
-    title="Paket Wisata Kampung Sorgum"
-    subtitle="Rasakan pengalaman unik berwisata di Kampung Sorgum! Jelajahi keindahan alam, belajar langsung tentang budidaya sorgum, dan nikmati berbagai kegiatan edukatif yang seru. Pilih paket wisata yang sesuai dengan kebutuhan Anda dan jadikan kunjungan Anda berkesan dengan menikmati hasil alam yang sehat dan ramah lingkungan."
+    title={judulToolskit}
+    subtitle={deskripsiToolskit}
+    buttonText="Lihat Lebih Lanjut"
+    columns={4}
     items={[
-      {
-        title: 'Paket 1',
-        description: 'Paket 1 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 2',
-        description: 'Paket 2 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 3',
-        description: 'Paket 3 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 4',
-        description: 'Paket 4 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 5',
-        description: 'Paket 5 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 6',
-        description: 'Paket 6 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
+      ...toolskitItems
     ]}
   >
     <Fragment slot="bg">
@@ -93,45 +150,12 @@ const metadata = {
 
   <LatestArticles
     id="olahan"
-    title="Paket Produk Unggulan Kampung Sorgum"
-    subtitle="Jelajahi berbagai pilihan produk sorgum berkualitas dari Kampung Sorgum. Setiap paket dirancang untuk memenuhi kebutuhan Anda akan pangan sehat, bergizi, dan ramah lingkungan. Dukung ketahanan pangan lokal dengan memilih produk sorgum terbaik kami."
+    title={judulOlahan}
+    subtitle={deskripsiOlahan}
+    buttonText="Lihat Lebih Lanjut"
+    columns={4}
     items={[
-      {
-        title: 'Paket 1',
-        description: 'Paket 1 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 2',
-        description: 'Paket 2 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 3',
-        description: 'Paket 3 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 4',
-        description: 'Paket 4 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 5',
-        description: 'Paket 5 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
-      {
-        title: 'Paket 6',
-        description: 'Paket 6 adalah paket yang paling murah dan paling banyak diminati oleh pelanggan kami.',
-        href: getPermalink('/paket'),
-        image: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      },
+      ...olahanItems
     ]}
   >
     <Fragment slot="bg">

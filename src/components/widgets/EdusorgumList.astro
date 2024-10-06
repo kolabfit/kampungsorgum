@@ -12,27 +12,34 @@ const {
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
   columns = 6,
-  defaultIcon,
   id,
   isDark = false,
   classes = {},
-  contentID = 'edusorgumType',
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+function limitWords(text: string, wordLimit: number = 10): string {
+  const words = text.split(' ');
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(' ') + '...';
+  }
+  return text;
+}
 
 interface ArticleTypeID {
   contentTypeId: string;
   fields: {
+    idHalaman: EntryFieldTypes.Text;
     title: EntryFieldTypes.Text;
-    icon: EntryFieldTypes.Text;
-    subtitle: EntryFieldTypes.RichText;
     foto: EntryFieldTypes.AssetLink;
+    tanggal: EntryFieldTypes.Text;
+    subtitle: EntryFieldTypes.Text;
   };
 }
 
 // Fetch the entry and include linked assets
 const entries = await contentfulClient.getEntries<ArticleTypeID>({
-  content_type: contentID,
+  content_type: 'edusorgumArticleType',
   include: 1,
 });
 --- 
@@ -56,14 +63,16 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
         // Safely access the image URL
         const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
 
-        const link = getPermalink('edusorgum/' + item?.sys?.id);
+        const link = getPermalink('/edusorgum/' + item.fields.idHalaman);
+
+        const shortedSubtitle = limitWords(item.fields.subtitle, 15);
 
         return (
           <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">
             <img src={imageURL ?? ''} alt={item.fields.title} class="w-full h-auto mb-4" />
-            {item.fields.icon && <Icon name={item.fields.icon} class='mb-2 w-10 h-10 text-primary' />}
             <h3 class="text-lg font-bold mb-2">{item.fields.title}</h3>
-            <p class="text-sm text-muted mb-4">{item.fields.subtitle}</p>
+            <p class="text-md text-muted mb-4">{item.fields.tanggal}</p>
+            <p class="text-sm text-muted mb-4">{shortedSubtitle}</p>
             <a href={link} class="btn btn-primary" style="font-size: small;">
               Selengkapnya
             </a>

@@ -49,7 +49,7 @@ const items = entries.items.map((item) => {
 });
 
 // Define the structure of the content type based on your provided fields
-interface ProfileKampungSorgumType {
+interface EdutimentHalamanType {
   contentTypeId: string;
   fields: {
     entryname: EntryFieldTypes.Text;
@@ -58,7 +58,7 @@ interface ProfileKampungSorgumType {
   };
 }
 
-const entriesType = await contentfulClient.getEntries<ProfileKampungSorgumType>({
+const entriesType = await contentfulClient.getEntries<EdutimentHalamanType>({
   content_type: 'edutimentType',
   'fields.entryname': 'judulandcaption',
   limit: 1,
