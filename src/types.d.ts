@@ -219,6 +219,7 @@ export interface Hero extends Omit<Headline, 'classes'>, Omit<Widget, 'isDark' |
   content?: string;
   contentID?: string;
   actions?: string | CallToAction[];
+  image?: string | unknown;
   images?: ImageProps[];
 }
 

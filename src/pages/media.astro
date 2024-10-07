@@ -8,6 +8,7 @@ import LatestArticles from '~/components/widgets/LatestArticles.astro';
 
 import { contentfulClient } from '~/lib/contentful';
 import type { Asset, EntryFieldTypes } from 'contentful';
+import YoutubeSection from '~/components/widgets/YoutubeSection.astro';
 
 interface GalleryImagesType {
   contentTypeId: string;
@@ -87,10 +88,19 @@ const metadata = {
     </Fragment>
   </Hero>
   
-  <Fragment>
-    <YouTube id="ttK18mHKJ9A" title="Pengenalan Sorgum" />  
-    <YouTube id="Rgyael3qcmE" title="Intro Kampung Sorgum" />
-  </Fragment>
+  <YoutubeSection>
+    <Fragment slot="image">
+      <YouTube id="ttK18mHKJ9A" title="Pengenalan Sorgum" />
+      </style>
+    </Fragment>
+  </YoutubeSection>
+
+  <YoutubeSection>
+    <Fragment slot="image">
+      <YouTube id="Rgyael3qcmE" title="Intro Kampung Sorgum" />
+      </style>
+    </Fragment>
+  </YoutubeSection>
 
   <!-- Articles Widget **************** -->
 
