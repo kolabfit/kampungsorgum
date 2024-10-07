@@ -34,20 +34,7 @@ export const headerData = {
     },
     {
       text: 'Profil',
-      links: [
-        {
-          text: 'Tentang Kami',
-          href: getPermalink('/about#tentang'),
-        },
-        {
-          text: 'Sejarah',
-          href: getPermalink('/about#sejarah'),
-        },
-        {
-          text: 'Tim KWT',
-          href: getPermalink('/about#tim'),
-        }
-      ],
+      href: getPermalink('/about'),
     },
     {
       text: 'Edutainment',
@@ -55,16 +42,7 @@ export const headerData = {
     },
     {
       text: 'Produk',
-      links: [
-        {
-          text: 'Toolskit Budidaya',
-          href: getPermalink('/product#paket'),
-        },
-        {
-          text: 'Produk Olahan Sorgum',
-          href: getPermalink('/product#olahan'),
-        }
-      ],
+      href: getPermalink('/product'),
     },
     {
       text: 'Edusorgum',
@@ -102,15 +80,15 @@ export const footerData = {
       links: [
         {
           text: 'Profil',
-          href: getPermalink('/about#tentang'),
+          href: getPermalink('/about/#tentang'),
         },
         {
           text: 'Sejarah',
-          href: getPermalink('/about#sejarah'),
+          href: getPermalink('/about/#sejarah'),
         },
         {
           text: 'Tim KWT',
-          href: getPermalink('/about#tim'),
+          href: getPermalink('/about/#tim'),
         },
       ],
     },
@@ -118,16 +96,12 @@ export const footerData = {
       title: 'Produk Kami',
       links: [
         {
-          text: 'Makanan',
-          href: getPermalink('/product#makanan'),
+          text: 'Toolskit',
+          href: getPermalink('/product/#toolskit'),
         },
         {
-          text: 'Minuman',
-          href: getPermalink('/product#minuman'),
-        },
-        {
-          text: 'Bahan Baku',
-          href: getPermalink('/product#bahanbaku'),
+          text: 'Produk Olahan Sorgum',
+          href: getPermalink('/product#olahan'),
         },
       ],
     },
