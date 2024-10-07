@@ -5,6 +5,7 @@ import Button from '~/components/ui/Button.astro';
 import type { Hero as Props } from '~/types';
 import { contentfulClient } from '~/lib/contentful';
 import type { Asset, EntryFieldTypes } from 'contentful';
+import LargeLogo from '../LargeLogo.astro';
 
 const {
   title = await Astro.slots.render('title'),

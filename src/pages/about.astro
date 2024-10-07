@@ -6,6 +6,7 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import { contentfulClient } from '~/lib/contentful';
 import type { EntryFieldTypes } from 'contentful';
+import Note from '~/components/widgets/Note.astro';
 
 // Define the structure of the content type based on your provided fields
 interface ProfileKampungSorgumType {
@@ -132,4 +133,8 @@ const metadata = {
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
+  
+  <!-- Note Widget ******************* -->
+
+  <Note />
 </Layout>

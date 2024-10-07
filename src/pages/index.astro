@@ -10,7 +10,9 @@ import EdursogumPosts from '~/components/widgets/EdursogumPosts.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import LatestArticles from '~/components/widgets/LatestArticles.astro';
 import { SITE } from 'astrowind:config';
+import favIcon from '~/assets/favicons/favicon.ico';
 import PaketShortList from '~/components/widgets/PaketShortList.astro';
+import Image from '~/components/common/Image.astro';
 
 import { contentfulClient } from '~/lib/contentful';
 import type { Asset, EntryFieldTypes } from 'contentful';
@@ -114,22 +116,15 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
-    contentID="berandaHeroType"
-    ,
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Selengkapnya',
-        href: getPermalink('/about'),
-        // target: '_blank',
-        // icon: 'tabler:download',
-      },
-      // { text: 'Learn more', href: '#features' },
-    ]}
-    ,
+    contentID="berandaHeroType",
   >
     <Fragment slot="title">
-      {SITE?.name}
+        <Image
+          class="w-90"
+          src={favIcon}
+          alt="Hero image"
+          style='width: 14vw; height: 13vw;'
+        />
     </Fragment>
 
     <Fragment slot="bg">
@@ -146,10 +141,6 @@ const metadata = {
       Blogs.
     </Fragment> -->
   </Hero>
-
-  <!-- Note Widget ******************* -->
-
-  <Note />
 
   <!-- Features Widget *************** -->
 
@@ -202,7 +193,7 @@ const metadata = {
   <!-- Steps Widget ****************** -->
 
   <Steps
-    title="Manfaat dan keuntungan sorgum:"
+    title="Manfaat dan Keuntungan Sorgum:"
     items={[
       {
         title: 'Tahan Kondisi Kering',
