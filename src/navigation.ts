@@ -110,4 +110,5 @@ export const footerData = {
     ...items,
   ],
   secondaryLinks: [],
+  footNote: 'Pamengpeuk, Bojongmanggu, Bandung, Jawa Barat',
 };

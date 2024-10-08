@@ -6,9 +6,10 @@ import Button from './Button.astro';
 
 const { 
   items = [], 
-  columns, 
+  columns = 4, 
   defaultIcon = '', 
-  classes = {}, } = Astro.props;
+  classes = {}
+ } = Astro.props;
 
 const {
   container: containerClass = '',
@@ -24,46 +25,43 @@ const {
   items && (
     <div
       class={twMerge(
-        `grid gap-8 gap-x-12 sm:gap-y-8 ${
+        `grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-${columns} gap-8 gap-x-12 sm:gap-y-8 ${
           columns === 4
-            ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'
+            ? 'lg:grid-cols-4 md:grid-cols-3'
             : columns === 3
-              ? 'lg:grid-cols-3 sm:grid-cols-2'
-              : columns === 2
-                ? 'sm:grid-cols-2 '
-                : ''
+              ? 'lg:grid-cols-3'
+              : ''
         }`,
         containerClass
       )}
     >
-      {items.map(({ title, description, icon, callToAction, target, href: hrefThing, image, classes: itemClasses = {} }) => (
-        <a href={hrefThing} target={target}>
-          <div class={twMerge('relative flex flex-col', panelClass, itemClasses?.panel)}>
-            {(icon || defaultIcon) && (
-              <Icon name={icon || defaultIcon} class={twMerge('mb-2 w-10 h-10', defaultIconClass, itemClasses?.icon)} />
-            )}
-            <div class={twMerge('text-xl font-bold', titleClass, itemClasses?.title)}>{title}</div>
-            {image && (
-              <img
-                src={image.src}
-                alt={image.alt}
-                class="w-full h-auto mb-4"
-              />
-            )}
-            {description && (
-              <p
-                class={twMerge('text-muted mt-2', descriptionClass, itemClasses?.description)}
-                set:html={description}
-              />
-            )}
-            {callToAction && (
-              <div class="mt-2">
-                <Button {...callToAction} />
-              </div>
-            )}
+      {items.map(
+        ({ title, description, icon, callToAction, target, href: hrefThing, image, classes: itemClasses = {} }) => (
+          <div class={twMerge('relative flex flex-col ', panelClass, itemClasses?.panel)}>
+            <a href={hrefThing} target={target}>
+              {(icon || defaultIcon) && (
+                <Icon
+                  name={icon || defaultIcon}
+                  class={twMerge('mb-2 w-10 h-10', defaultIconClass, itemClasses?.icon)}
+                />
+              )}
+              <div class={twMerge('font-bold', titleClass, itemClasses?.title)}>{title}</div>
+              {image && <img src={image.src} alt={image.alt} class="w-full h-auto mb-4" />}
+              {description && (
+                <p
+                  class={twMerge('text-muted mt-2 text-xs sm:text-xs lg:text-lg', descriptionClass, itemClasses?.description)}
+                  set:html={description}
+                />
+              )}
+              {callToAction && (
+                <div class="mt-2">
+                  <Button {...callToAction} />
+                </div>
+              )}
+            </a>
           </div>
-        </a>
-      ))}
+        )
+      )}
     </div>
   )
 }
