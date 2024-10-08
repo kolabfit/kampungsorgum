@@ -11,7 +11,7 @@ const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
-  columns = 6,
+  columns = 3,
   id,
   isDark = false,
   classes = {},
@@ -52,7 +52,7 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
     classes={classes?.headline as Record<string, string>}
   />
 
-  <div class=`grid grid-cols-6 grid-cols-${columns} gap-4 md:gap-6`>
+  <div class=`grid grid-cols-3 grid-cols-${columns} gap-4 md:gap-6`>
     {
       entries.items.map((item) => {
         // Get the image URL from the "foto" field
@@ -71,8 +71,8 @@ const entries = await contentfulClient.getEntries<ArticleTypeID>({
           <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">
             <img src={imageURL ?? ''} alt={item.fields.title} class="w-full h-auto mb-4" />
             <h3 class="text-lg font-bold mb-2">{item.fields.title}</h3>
-            <p class="text-md text-muted mb-4">{item.fields.tanggal}</p>
-            <p class="text-sm text-muted mb-4">{shortedSubtitle}</p>
+            <p class="text-xs text-muted mb-2">{item.fields.tanggal}</p>
+            <p class="text-md text-muted mb-4">{shortedSubtitle}</p>
             <a href={link} class="btn btn-primary" style="font-size: small;">
               Selengkapnya
             </a>

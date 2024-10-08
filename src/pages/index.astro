@@ -30,8 +30,10 @@ interface PaketShortListType {
   contentTypeId: string;
   fields: {
     namaPaket: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
     judul: EntryFieldTypes.Text;
     isiPaket: EntryFieldTypes.Text;
+    harga: EntryFieldTypes.Text;
   };
 }
 
@@ -40,11 +42,20 @@ const shortPaket = await contentfulClient.getEntries<PaketShortListType>({
   content_type: 'berandaPaketSorgumType',
 });
 
-const items = shortPaket.items.map((item) => {
+const paket = shortPaket.items.map((item) => {
+  const asset: Asset | undefined = shortPaket.includes?.Asset?.find(
+    (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+  );
+
+  // Safely access the image URL
+  const imageShortPaket: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
   return {
     title: item.fields.judul,
     description: item.fields.isiPaket,
     href: getPermalink('/edutainment'),
+    image: imageShortPaket,
+    harga: item.fields.harga,
   };
 });
 
@@ -64,13 +75,12 @@ const productList = await contentfulClient.getEntries<ProductListType>({
 });
 
 const productListitems = productList.items.map((item) => {
-  
-    const asset: Asset | undefined = productList.includes?.Asset?.find(
-      (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
-    );
+  const asset: Asset | undefined = productList.includes?.Asset?.find(
+    (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+  );
 
-    // Safely access the image URL
-    const imageProductURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+  // Safely access the image URL
+  const imageProductURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
 
   return {
     title: item.fields.judul,
@@ -115,16 +125,9 @@ const metadata = {
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
-  <Hero
-    contentID="berandaHeroType",
-  >
+  <Hero contentID="berandaHeroType" ,>
     <Fragment slot="title">
-        <Image
-          class="w-90"
-          src={favIcon}
-          alt="Hero image"
-          style='width: 14vw; height: 13vw;'
-        />
+      <Image class="w-90" src={favIcon} alt="Hero image" style="width: 14vw; height: 13vw;" />
     </Fragment>
 
     <Fragment slot="bg">
@@ -178,12 +181,11 @@ const metadata = {
 
   <!-- PaketShortList Widget ************** -->
 
-  <PaketShortList
-    title="Edutainment"
-    subtitle="Paket yang tersedia:"
-    items={[
-      ...items
-    ]}
+  <PaketShortList 
+    title="Edutainment" 
+    columns={3}
+    subtitle="Paket yang tersedia:" 
+    items={[...paket]}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0"></div>
@@ -240,9 +242,7 @@ const metadata = {
     title="Produk Sorgum"
     subtitle="Temukan berbagai produk olahan sorgum yang sehat, lezat, dan ramah lingkungan."
     buttonText="Lihat Semua Produk"
-    items={[
-      ...productListitems
-    ]}
+    items={[...productListitems]}
   >
     <Fragment slot="bg">
       <div class="absolute inset-0"></div>
@@ -255,25 +255,25 @@ const metadata = {
     title="Hubungi Kami"
     subtitle="Jika Anda memiliki pertanyaan atau ingin berdiskusi lebih lanjut, jangan ragu untuk menghubungi kami."
   >
+    <!-- CallToAction Widget *********** -->
 
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Kontak',
-        href: getPermalink('/contact'),
-        // target: '_blank',
-        // icon: 'tabler:download',
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      <br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Kunjungi Kami!</span>
-    </Fragment>
-    <Fragment slot="bg">
-      <div class="absolute inset-0"></div>
-    </Fragment>
-  </CallToAction>
+    <CallToAction
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Kontak',
+          href: getPermalink('/contact'),
+          // target: '_blank',
+          // icon: 'tabler:download',
+        },
+      ]}
+    >
+      <Fragment slot="title">
+        <br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Kunjungi Kami!</span>
+      </Fragment>
+      <Fragment slot="bg">
+        <div class="absolute inset-0"></div>
+      </Fragment>
+    </CallToAction>
+  </ContactApps>
 </Layout>
