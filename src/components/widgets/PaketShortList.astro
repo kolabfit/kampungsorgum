@@ -9,7 +9,7 @@ const {
   tagline = await Astro.slots.render('tagline'),
   buttonText = await Astro.slots.render('buttonText'),
   items = [],
-  columns = 6,
+  columns = 3,
   defaultIcon,
   id,
   isDark = false,
@@ -23,8 +23,7 @@ const {
   {
     items && (
       <div
-        class={`grid grid-cols-${columns} sm:grid-cols-${columns} lg:grid-cols-${columns} gap-4 md:gap-6`}
-        style={`grid-template-columns: repeat(${columns}, 1fr)`}
+        class={`grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-${columns} gap-4 md:gap-6`}
       >
         {items.map((item) => (
           <article class="rounded-lg backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 flex flex-col items-center">

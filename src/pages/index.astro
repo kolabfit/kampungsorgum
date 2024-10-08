@@ -52,7 +52,7 @@ const paket = shortPaket.items.map((item) => {
 
   return {
     title: item.fields.judul,
-    description: item.fields.isiPaket,
+    description: limitWords(item.fields.isiPaket, 8),
     href: getPermalink('/edutainment'),
     image: imageShortPaket,
     harga: item.fields.harga,
