@@ -109,17 +109,17 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       overflow: hidden;
     }
 
-    @media screen and (max-width: 640px) {
+    @media screen and (max-width: 768px) {
       .carousel-container {
-        height: 20vh;
+        height: 180px;
       }
 
       .carousel-slides {
-        height: 50vh;
+        height: 180px;
       }
 
       .carousel-slide {
-        height: 50vh;
+        height: 180px;
       }
     }
 
@@ -213,13 +213,14 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       const images = document.querySelectorAll('.dynamic-image');
       const screenWidth = screen.width;
       const screenHeight = screen.height;
+      // const screenHeight = 250;
 
       images.forEach((img) => {
         img.width = screenWidth;
         img.style.maxWidth = `${screenWidth}px`; // Set max-width to screen width
-        // img.height = screenHeight; // Ensure the image covers the full height of the screen
-        // img.style.height = `${screenHeight}px`; // Set height to screen height
-        // img.style.maxHeight = `${screenHeight}px`; // Set max-width to screen width
+        img.height = screenHeight; // Ensure the image covers the full height of the screen
+        img.style.height = `${screenHeight}px`; // Set height to screen height
+        img.style.maxHeight = `${screenHeight}px`; // Set max-width to screen width
       });
     }
 
