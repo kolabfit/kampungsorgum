@@ -32,7 +32,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
 });
 ---
 
-<section class="relative md:-mt-[76px] not-prose bg-slate-100 dark:bg-slate-900" {...id ? { id } : {}}>
+<section class="setbacksized relative md:-mt-[76px] not-prose bg-slate-100 dark:bg-slate-900" {...id ? { id } : {}}>
   <div class="carousel-container relative overflow-hidden h-screen">
     <div class="carousel-slides">
       {
@@ -103,30 +103,20 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
   </div>
 
   <style>
-    .carousel-container {
-      position: relative;
-      height: 70vh;
-      overflow: hidden;
+    .setbacksized {
+      background-size: cover;
     }
 
-    @media screen and (max-width: 768px) {
-      .carousel-container {
-        height: 180px;
-      }
-
-      .carousel-slides {
-        height: 180px;
-      }
-
-      .carousel-slide {
-        height: 180px;
-      }
+    .carousel-container {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
     }
 
     .carousel-slides {
       display: flex;
       transition: transform 0.5s ease-in-out;
-      height: 100%;
+      height: 400px;
       position: absolute;
       top: 0;
       left: 0;
@@ -135,7 +125,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
 
     .carousel-slide {
       min-width: 100%;
-      height: 100%; /* Ensure each slide covers the full height of the screen */
+      height: 400px;
       background-size: cover;
       background-position: center;
       position: relative;
@@ -157,7 +147,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
     }
     .carousel-button {
       position: absolute;
-      top: 50%;
+      top: 200px;
       transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.7);
       border: none;
@@ -211,9 +201,10 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       }
 
       const images = document.querySelectorAll('.dynamic-image');
+      const bglayer = document.querySelector('.setbacksized');
       const screenWidth = screen.width;
-      const screenHeight = screen.height;
-      // const screenHeight = 250;
+      // const screenHeight = screen.height;
+      const screenHeight = 400;
 
       images.forEach((img) => {
         img.width = screenWidth;
@@ -221,6 +212,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
         img.height = screenHeight; // Ensure the image covers the full height of the screen
         img.style.height = `${screenHeight}px`; // Set height to screen height
         img.style.maxHeight = `${screenHeight}px`; // Set max-width to screen width
+        bglayer.style.height = `${screenHeight}px`; // Set height to screen height
       });
     }
 
