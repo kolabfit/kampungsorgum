@@ -14,7 +14,7 @@ const {
   content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
   id,
-  contentID = 'berandaHeroType'
+  contentID = 'berandaHeroType',
 } = Astro.props;
 
 interface ArticleContentType {
@@ -49,13 +49,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
           return (
             imageURL && (
               <div class="carousel-slide">
-                <Image
-                  sizes={'100%'}
-                  class="dynamic-image rounded-md"
-                  loading="eager"
-                  src={imageURL}
-                  alt="Hero image"
-                />
+                <div class="dynamic-image" style={`background-image: url(${imageURL});`}></div>
               </div>
             )
           );
@@ -103,6 +97,13 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
   </div>
 
   <style>
+    .dynamic-image {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    
     .setbacksized {
       background-size: cover;
     }
@@ -221,10 +222,10 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       autoScrollSlides();
     });
 
-document.addEventListener('astro:after-swap', () => {
+    document.addEventListener('astro:after-swap', () => {
       setPage();
       autoScrollSlides();
-});
+    });
 
     window.addEventListener('resize', setPage);
     window.addEventListener('load', function () {
