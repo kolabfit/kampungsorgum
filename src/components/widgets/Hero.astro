@@ -108,6 +108,21 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       height: 70vh;
       overflow: hidden;
     }
+
+    @media screen and (max-width: 640px) {
+      .carousel-container {
+        height: 20vh;
+      }
+
+      .carousel-slides {
+        height: 50vh;
+      }
+
+      .carousel-slide {
+        height: 50vh;
+      }
+    }
+
     .carousel-slides {
       display: flex;
       transition: transform 0.5s ease-in-out;
@@ -117,6 +132,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       left: 0;
       width: 100%;
     }
+
     .carousel-slide {
       min-width: 100%;
       height: 100%; /* Ensure each slide covers the full height of the screen */
@@ -124,6 +140,7 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       background-position: center;
       position: relative;
     }
+
     .overlay-content {
       position: absolute;
       top: 0;
@@ -200,9 +217,9 @@ const entries = await contentfulClient.getEntries<ArticleContentType>({
       images.forEach((img) => {
         img.width = screenWidth;
         img.style.maxWidth = `${screenWidth}px`; // Set max-width to screen width
-        img.height = screenHeight; // Ensure the image covers the full height of the screen
-        img.style.height = `${screenHeight}px`; // Set height to screen height
-        img.style.maxHeight = `${screenHeight}px`; // Set max-width to screen width
+        // img.height = screenHeight; // Ensure the image covers the full height of the screen
+        // img.style.height = `${screenHeight}px`; // Set height to screen height
+        // img.style.maxHeight = `${screenHeight}px`; // Set max-width to screen width
       });
     }
 
